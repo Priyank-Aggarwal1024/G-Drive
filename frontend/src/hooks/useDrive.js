@@ -16,11 +16,6 @@ export default function useDrive(params) {
     totalFolders: 0,
   });
 
-  useEffect(() => {
-    getUserStats();
-    fetchData();
-  }, [params?.folder, params?.parent]);
-
   const fetchData = async () => {
     setLoading(true);
     try {
@@ -115,6 +110,10 @@ export default function useDrive(params) {
       totalFolders: user.totalFolders,
     });
   }, [user]);
+  useEffect(() => {
+    getUserStats();
+    fetchData();
+  }, [params?.folder, params?.parent]);
   return {
     files,
     folders,
@@ -128,5 +127,6 @@ export default function useDrive(params) {
     handleDelete,
     handleToggleStar,
     setCurrentPage,
+    getUserStats,
   };
 }

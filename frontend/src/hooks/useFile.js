@@ -3,7 +3,7 @@ import { showToast } from "../components/ui/Toaster";
 import { api, useAuth } from "../context/AuthContext";
 
 export default function useFile(folderId = null) {
-  const { user } = useAuth();
+  const { user, getUserStats } = useAuth();
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -33,7 +33,7 @@ export default function useFile(folderId = null) {
 
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("folder", folderId || "");
+      if (folderId) formData.append("folder", folderId);
 
       setUploading(true);
       try {
@@ -42,6 +42,7 @@ export default function useFile(folderId = null) {
         });
 
         setFiles((prevFiles) => [response.data.data, ...prevFiles]);
+        getUserStats();
         showToast("File uploaded successfully");
       } catch (error) {
         console.error("Error uploading file:", error);
@@ -74,6 +75,7 @@ export default function useFile(folderId = null) {
     try {
       await api.delete(`/files/${fileId}`);
       setFiles((prevFiles) => prevFiles.filter((file) => file._id !== fileId));
+      getUserStats();
       showToast("File deleted successfully");
     } catch (error) {
       console.error("Error deleting file:", error);
@@ -114,7 +116,6 @@ export default function useFile(folderId = null) {
       showToast("Failed to download file");
     }
   }, []);
-
   return {
     files,
     loading,

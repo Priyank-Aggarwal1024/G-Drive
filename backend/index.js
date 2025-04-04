@@ -48,17 +48,6 @@ mongoose
     const server = app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
-
-    // Handle server shutdown
-    process.on("SIGTERM", () => {
-      console.log("SIGTERM received. Shutting down gracefully...");
-      server.close(() => {
-        mongoose.connection.close(false, () => {
-          console.log("MongoDB connection closed.");
-          process.exit(0);
-        });
-      });
-    });
   })
   .catch((error) => {
     console.error("MongoDB connection error:", error);

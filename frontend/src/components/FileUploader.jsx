@@ -58,11 +58,6 @@ export default function FileUploader({ onUploadComplete }) {
           file.name
         );
       });
-
-      if (folderId) {
-        formData.append("folder", folderId);
-      }
-
       const response = await api.post("/files/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",

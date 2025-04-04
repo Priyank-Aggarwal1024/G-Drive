@@ -8,7 +8,6 @@ import {
 } from "../services/storage.service.js";
 
 export const uploadFiles = async (req, res) => {
-  console.log("req.files", req.files);
   try {
     const files = req.files || req.body.files || [];
 
@@ -58,7 +57,6 @@ export const uploadFiles = async (req, res) => {
         uploadedFiles.push(newFile);
         continue;
       }
-      console.log("req.body", req.body);
       const newFile = await File.create({
         name: file.originalname,
         originalName: file.originalname,
@@ -66,10 +64,7 @@ export const uploadFiles = async (req, res) => {
         size: file.size,
         path: filePath.Location,
         owner: req.user.id,
-        folder:
-          req.body.folder == "undefined" || req.body.folder == ""
-            ? null
-            : req.body.folder,
+        folder: req.query.folder || null,
         Key: filePath.Key,
         ETag: filePath.ETag,
       });

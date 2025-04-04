@@ -24,7 +24,7 @@ import FolderViewShimmer from "../components/ui/FolderViewShimmer";
 
 export default function FolderView() {
   const { id } = useParams();
-  const { folders, loading, fetchData, stats } = useDrive({
+  const { folders, loading, fetchData, getUserStats, stats } = useDrive({
     folder: id,
     parent: id,
   });
@@ -97,7 +97,7 @@ export default function FolderView() {
     }
   };
   useEffect(() => {
-    fetchData();
+    getUserStats();
   }, [deleteFile, toggleStar, renameFile, downloadFile]);
 
   if (loading) {
@@ -132,7 +132,7 @@ export default function FolderView() {
                 New Folder
               </button>
               <button
-                onClick={() => navigate(`/upload?folder=${id || null}`)}
+                onClick={() => navigate(`/upload${id ? `?folder=${id}` : ""}`)}
                 className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
               >
                 <FiUpload className="mr-2" />
@@ -370,7 +370,7 @@ export default function FolderView() {
                               {activity.action}
                             </span>{" "}
                             <span className="truncate">
-                              {activity.itemId?.name}
+                              {activity.metadata?.name}
                             </span>
                           </p>
                           <p className="text-sm text-gray-500">
