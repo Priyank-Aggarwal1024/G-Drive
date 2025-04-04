@@ -270,3 +270,42 @@ export const toggleStar = async (req, res) => {
     });
   }
 };
+
+export const renameFile = async (req, res) => {
+  try {
+    const file = await File.findOne({
+      _id: req.params.id,
+      owner: req.user.id,
+    });
+    if (!file) {
+      return res.status(404).json({
+        success: false,
+        message: "File not found",
+      });
+    }
+    if (req.body.name) {
+      file.name = req.body.name;
+      await file.save();
+      logActivity(req.user.id, file._id, "File", "renamed", {
+        name: file.name,
+        size: file.size,
+      });
+      res.status(200).json({
+        success: true,
+        data: file,
+        message: "File renamed successfully",
+      });
+    } else {
+      return res.status(400).json({
+        success: false,
+        message: "File name is required",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error renaming file",
+      error: error.message,
+    });
+  }
+};

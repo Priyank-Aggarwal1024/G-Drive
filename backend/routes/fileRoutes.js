@@ -6,6 +6,7 @@ import {
   deleteFile,
   downloadFile,
   toggleStar,
+  renameFile,
 } from "../controllers/fileController.js";
 import multer from "multer";
 import { isAuthenticated } from "../middleware/auth.js";
@@ -22,5 +23,6 @@ router.get("/:id", getFile);
 router.delete("/:id", deleteFile);
 router.get("/:id/download", downloadFile);
 router.patch("/:id/star", toggleStar);
+router.patch("/:id/rename", renameFile);
 
 export default router;

@@ -11,6 +11,8 @@ import {
   FiExternalLink,
   FiCopy,
   FiMove,
+  FiCheck,
+  FiX,
 } from "react-icons/fi";
 
 const FileView = ({
@@ -26,7 +28,10 @@ const FileView = ({
   isStarred,
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isRenaming, setIsRenaming] = useState(false);
+  const [newName, setNewName] = useState(file.name);
   const menuRef = useRef(null);
+  const renameInputRef = useRef(null);
 
   const handleDownload = (e) => {
     e.stopPropagation();
@@ -48,8 +53,22 @@ const FileView = ({
 
   const handleRename = (e) => {
     e.stopPropagation();
-    onRename(file._id);
+    setIsRenaming(true);
     setIsMenuOpen(false);
+  };
+
+  const handleRenameSubmit = (e) => {
+    e.stopPropagation();
+    if (newName.trim() && newName !== file.name) {
+      onRename(file._id, newName);
+    }
+    setIsRenaming(false);
+  };
+
+  const handleRenameCancel = (e) => {
+    e.stopPropagation();
+    setNewName(file.name);
+    setIsRenaming(false);
   };
 
   const handleShare = (e) => {
@@ -90,6 +109,14 @@ const FileView = ({
     };
   }, []);
 
+  // Focus rename input when entering rename mode
+  useEffect(() => {
+    if (isRenaming && renameInputRef.current) {
+      renameInputRef.current.focus();
+      renameInputRef.current.select();
+    }
+  }, [isRenaming]);
+
   return (
     <div
       className={`max-w-full w-full ${
@@ -102,14 +129,43 @@ const FileView = ({
         <div className="flex items-center max-w-full gap-2">
           <FiFile className="w-8 h-8 text-gray-500" />
           <div className="w-fit max-w-[140px]">
-            {" "}
-            {/* Constrain width here */}
-            <span className="block text-sm font-medium text-gray-900 truncate whitespace-nowrap overflow-hidden">
-              {file.name}
-            </span>
-            <p className="text-sm text-gray-500">
-              {(file.size / (1024 * 1024)).toFixed(2)} MB
-            </p>
+            {isRenaming ? (
+              <div className="flex items-center gap-2">
+                <input
+                  ref={renameInputRef}
+                  type="text"
+                  value={newName}
+                  onChange={(e) => setNewName(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") handleRenameSubmit(e);
+                    if (e.key === "Escape") handleRenameCancel(e);
+                  }}
+                  className="block w-full text-sm border-gray-300 rounded-md focus:border-blue-500 focus:ring-blue-500"
+                  onClick={(e) => e.stopPropagation()}
+                />
+                <button
+                  onClick={handleRenameSubmit}
+                  className="p-1 text-green-600 hover:text-green-700"
+                >
+                  <FiCheck className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={handleRenameCancel}
+                  className="p-1 text-red-600 hover:text-red-700"
+                >
+                  <FiX className="w-4 h-4" />
+                </button>
+              </div>
+            ) : (
+              <>
+                <span className="block text-sm font-medium text-gray-900 truncate whitespace-nowrap overflow-hidden">
+                  {file.name}
+                </span>
+                <p className="text-sm text-gray-500">
+                  {(file.size / (1024 * 1024)).toFixed(2)} MB
+                </p>
+              </>
+            )}
           </div>
         </div>
         <div className="flex items-center max-w-full">
