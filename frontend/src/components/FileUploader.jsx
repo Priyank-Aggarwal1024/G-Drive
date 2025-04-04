@@ -68,7 +68,7 @@ export default function FileUploader({ onUploadComplete }) {
           "Content-Type": "multipart/form-data",
         },
         params: {
-          folder: folderId,
+          folder: folderId || null,
         },
         onUploadProgress: (progressEvent) => {
           const percentCompleted = Math.round(
