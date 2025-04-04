@@ -1,122 +1,168 @@
-# G-Drive Clone
+# Drive Frontend
 
-A web application that allows users to create folders, upload images, and search through their images, similar to Google Drive.
+A modern and responsive frontend for a cloud storage application built with React, Tailwind CSS, and React Router.
 
 ## Features
 
-- User authentication (signup, login, logout)
-- Create nested folders
-- Upload images to folders
-- Search images by name
-- User-specific access (users can only see their own folders and images)
+- Modern and responsive UI
+- File and folder management
+- Grid and list view options
+- File upload and download
+- File sharing capabilities
+- Search functionality
+- Storage statistics
+- Recent activity tracking
+- Starred items management
+- Pagination support
 
 ## Tech Stack
 
-- Frontend: React.js
-- Backend: Node.js with Express
-- Database: MongoDB
-- Authentication: JWT
+- React.js
+- React Router for navigation
+- Tailwind CSS for styling
+- React Icons for icons
+- Axios for API calls
+- Context API for state management
+- Custom hooks for reusable logic
 
 ## Prerequisites
 
 - Node.js (v14 or higher)
-- MongoDB
 - npm or yarn
 
-## Setup Instructions
+## Installation
 
 1. Clone the repository:
 
 ```bash
 git clone <repository-url>
-cd g-drive
-```
-
-2. Install backend dependencies:
-
-```bash
-cd backend
-npm install
-```
-
-3. Install frontend dependencies:
-
-```bash
-cd ../frontend
-npm install
-```
-
-4. Create a `.env` file in the backend directory with the following variables:
-
-```
-MONGODB_URI=mongodb://localhost:27017/g-drive
-JWT_SECRET=your-secret-key
-PORT=5000
-```
-
-5. Create an `uploads` directory in the backend folder:
-
-```bash
-mkdir backend/uploads
-```
-
-## Running the Application
-
-1. Start the backend server:
-
-```bash
-cd backend
-npm start
-```
-
-2. Start the frontend development server:
-
-```bash
 cd frontend
-npm start
 ```
 
-3. Open your browser and navigate to `http://localhost:3000`
+2. Install dependencies:
 
-## API Endpoints
+```bash
+npm install
+# or
+yarn install
+```
 
-### Authentication
+3. Create a `.env` file in the root directory with the following variables:
 
-- POST `/api/auth/signup` - Register a new user
-- POST `/api/auth/login` - Login user
-- POST `/api/auth/logout` - Logout user
+```env
+REACT_APP_API_URL=http://localhost:5000
+```
 
-### Folders
+4. Start the development server:
 
-- GET `/api/folders` - Get all folders for the current user
-- POST `/api/folders` - Create a new folder
-- GET `/api/folders/:id` - Get folder by ID
-- DELETE `/api/folders/:id` - Delete folder
+```bash
+npm start
+# or
+yarn start
+```
 
-### Images
+## Project Structure
 
-- POST `/api/images` - Upload an image
-- GET `/api/images` - Get all images for the current user
-- GET `/api/images/search` - Search images by name
-- GET `/api/images/:id` - Get image by ID
-- DELETE `/api/images/:id` - Delete image
+```
+frontend/
+├── public/            # Static files
+│   └── src/
+│       ├── components/    # Reusable components
+│       │   ├── ui/       # UI components
+│       │   └── layout/   # Layout components
+│       ├── context/      # Context providers
+│       ├── hooks/        # Custom hooks
+│       ├── pages/        # Page components
+│       ├── utils/        # Utility functions
+│       ├── App.jsx       # Main application
+│       └── index.jsx     # Entry point
+```
 
-## Deployment
+## Key Components
 
-The application can be deployed using any cloud platform that supports Node.js and MongoDB. Some popular options include:
+### UI Components
 
-- Heroku
-- DigitalOcean
-- AWS
-- Google Cloud Platform
+- `FileView` - File item display with actions
+- `FolderView` - Folder item display
+- `Pagination` - Pagination controls
+- `Toaster` - Toast notifications
+- `FolderViewShimmer` - Loading skeleton
 
-## Security Considerations
+### Pages
 
-- All API endpoints are protected with JWT authentication
-- Passwords are hashed using bcrypt
-- File uploads are restricted to image files only
-- File size is limited to 5MB
-- Users can only access their own folders and images
+- `Dashboard` - Main dashboard view
+- `FolderView` - Folder contents view
+- `Login` - User authentication
+- `Register` - User registration
+
+### Context
+
+- `AuthContext` - Authentication state
+- `DriveContext` - Drive operations
+
+### Hooks
+
+- `useDrive` - Drive operations
+- `useFile` - File operations
+- `useAuth` - Authentication operations
+
+## Features Implementation
+
+### File Operations
+
+- Upload files
+- Download files
+- Delete files
+- Rename files
+- Share files
+- Copy files
+- Move files
+- Star/unstar files
+
+### Folder Operations
+
+- Create folders
+- Navigate folders
+- Delete folders
+- View folder contents
+
+### User Interface
+
+- Responsive grid and list views
+- Search functionality
+- Storage statistics
+- Recent activity feed
+- Loading skeletons
+- Toast notifications
+
+## Styling
+
+The application uses Tailwind CSS for styling with a custom configuration:
+
+- Responsive design
+- Dark mode support
+- Custom animations
+- Consistent spacing and typography
+- Modern UI components
+
+## State Management
+
+The application uses React Context API for state management:
+
+- Authentication state
+- Drive operations
+- File operations
+- UI state
+
+## API Integration
+
+The frontend communicates with the backend API using Axios:
+
+- Authentication endpoints
+- File operations
+- Folder operations
+- User statistics
+- Activity tracking
 
 ## Contributing
 
