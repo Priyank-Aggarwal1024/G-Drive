@@ -29,8 +29,9 @@ export default function FolderView() {
     parent: id,
   });
   const { user } = useAuth();
-  const { deleteFile, files, toggleStar, renameFile, downloadFile } =
-    useFile(id);
+  const { deleteFile, files, toggleStar, renameFile, downloadFile } = useFile(
+    id ? id : null
+  );
   const navigate = useNavigate();
 
   const [viewMode, setViewMode] = useState("grid");
@@ -38,7 +39,6 @@ export default function FolderView() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [newName, setNewName] = useState("");
   const items = [
     ...folders.map((folder) => ({ ...folder, type: "folder" })),
     ...files.map((file) => ({ ...file, type: "file" })),

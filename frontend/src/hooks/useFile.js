@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { showToast } from "../components/ui/Toaster";
 import { api, useAuth } from "../context/AuthContext";
 
-export default function useFile(folderId) {
+export default function useFile(folderId = null) {
   const { user } = useAuth();
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
