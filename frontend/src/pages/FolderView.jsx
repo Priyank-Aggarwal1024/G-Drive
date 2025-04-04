@@ -14,7 +14,7 @@ import {
   FiX,
   FiFile,
 } from "react-icons/fi";
-import { showToast } from "../components/ui/toaster";
+import { showToast } from "../components/ui/Toaster";
 import { api, useAuth } from "../context/AuthContext";
 import Pagination from "../components/ui/Pagination";
 import FileView from "../components/ui/FileView";

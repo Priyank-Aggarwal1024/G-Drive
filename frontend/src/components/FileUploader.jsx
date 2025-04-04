@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { FiUpload, FiX } from "react-icons/fi";
-import { showToast } from "./ui/toaster";
+import { showToast } from "./ui/Toaster";
 import { api } from "../context/AuthContext";
 import { useSearchParams } from "react-router-dom";
 

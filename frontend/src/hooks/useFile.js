@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { showToast } from "../components/ui/toaster";
+import { showToast } from "../components/ui/Toaster";
 import { api, useAuth } from "../context/AuthContext";
 
 export default function useFile(folderId) {

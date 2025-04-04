@@ -1,5 +1,4 @@
 import React from "react";
-import { FiFolder, FiFile } from "react-icons/fi";
 
 const FolderViewShimmer = () => {
   return (
