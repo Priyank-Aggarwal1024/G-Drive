@@ -48,6 +48,7 @@ export default function useDrive(params) {
       await api.post("/folders", { name: folderName });
       showToast("Folder created successfully");
       fetchData();
+      getUserStats();
     } catch (error) {
       console.error("Error creating folder:", error);
       showToast("Failed to create folder");
@@ -61,6 +62,7 @@ export default function useDrive(params) {
         ? setFiles(files.filter((file) => file._id !== itemId))
         : setFolders(folders.filter((folder) => folder._id !== itemId));
       showToast("Item deleted successfully");
+      getUserStats();
     } catch (error) {
       console.error("Error deleting item:", error);
       showToast("Failed to delete item");
@@ -86,6 +88,7 @@ export default function useDrive(params) {
             )
           );
       showToast("Star toggled successfully");
+      getUserStats();
     } catch (error) {
       console.error("Error toggling star:", error);
       showToast("Failed to toggle star");

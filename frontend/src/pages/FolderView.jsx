@@ -29,9 +29,14 @@ export default function FolderView() {
     parent: id,
   });
   const { user } = useAuth();
-  const { deleteFile, files, toggleStar, renameFile, downloadFile } = useFile(
-    id ? id : null
-  );
+  const {
+    deleteFile,
+    files,
+    toggleStar,
+    renameFile,
+    downloadFile,
+    fetchFiles,
+  } = useFile(id ? id : null);
   const navigate = useNavigate();
 
   const [viewMode, setViewMode] = useState("grid");
@@ -89,8 +94,8 @@ export default function FolderView() {
         name: folderName,
         parent: id,
       });
+      fetchData();
       showToast("Folder created successfully");
-      fetchFolderContents();
     } catch (error) {
       showToast("Failed to create folder");
       console.error("Error:", error);
